@@ -1,0 +1,240 @@
+Gophercon Brasil 2024
+29 Maio
+
+Giácomo Quinalia & Bruno Spolavori
+giacomo.quinalia@gmail.com
+
+* bit.ly/ixcgo
+.image images/bit.ly_ixcgo.png 600 600
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.caption por [[https://instagram.com/reneefrench][Wesley Willians]]
+
+Não apenas uma linguagem: uma plataforma end-to-end.
+
+- Promessa de compatibilidade: nunca haverá a versão 2.0
+- Testes
+- Formatação
+- Gerenciamento de dependências nativo
+- Profiling
+- Segurança
+- go command
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+
+Mais receita, Menos custos, Menos riscos.
+
+Empresas precisam escalar suas operações
+
+- *performance*
+
+Velocidade na entrega de suas soluções
+
+- *simplicidade*
+
+Economizar com infraestrutura
+
+- *eficiência*
+
+Necessidade de aplicações seguras
+
+- *segurança*
+
+: Projetos open-source usando Go
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/go_is.png
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/companies_using_go_1.png 200 700
+.image images/cloud__and_open_source.png 300 800
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+Mercado livre
+.image images/mercado_livre_languages_stats.png 500 850
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+Mercado livre
+.image images/mercado_livre_languages_predict.png 540 840
+
+: * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+: .image images/go_complete_platform.png
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/total_go_users.png
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/expect_use_languages.png 600 800
+
+*
+.background images/last_year_languages_used.png
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/users_satisfaction.png 400 900
+.html users_satisfaction.html
+
+: * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+: .image images/jetbrains_salary_trends.png 600 900
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/language_comparison_1.png
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/language_comparison_2.png
+
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+.image images/language_comparison_3.png
+
+* Perguntas?
+.image images/any_questions_2.png
+
+* Comparando Threads: Threads convencionais vs a inovação de Go
+- Diferenças de custos, nova thead e troca de contexto
+- Comparação entre outras linguagens e Golang 
+
+* Perguntas?
+.image images/any_questions_1.png
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+
+Structured Logging with slog
+
+- Performance
+- Uso de memória
+- Extensibilidade
+
+sirupsen/logrus (23.8k⭐️)
+uber-go/zap (20.5k⭐️) 
+rs/zerolog (9.4k⭐️)
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Arquitetura
+.image images/slog_arch_1.png 450 900
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Arquitetura
+.image images/slog_arch_2.png 450 900
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Arquitetura
+.image images/slog_arch_3.png 450 900
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+
+Níveis
+
+    const (
+        LevelDebug Level = -4
+        LevelInfo  Level = 0
+        LevelWarn  Level = 4
+        LevelError Level = 8
+    )
+
+- Levels são inteiros
+- Espaços para que possa ser criado levels customizados
+- Info é o level padrão
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Text handler
+.play text_logger.go /^//START/,/^//END/
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+JSON handler
+.play json_logger.go /^//START/,/^//END/
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+With
+.play logger_with.go /^//START/,/^//END/
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Group
+.play logger_group.go /^//START/,/^//END/
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+.image images/slog_zap.png 500 900
+
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+- Câmeras
+- Desafios em desenvolver um hardware proprietário
+2200 clientes; 6000 câmeras apontadas para a rua
+2000 câmeras internas; 190000 usuários
+.image images/image.png
+
+* Serviços que Fofocam: Desvendando a Magia do Serf em Go
+
+- Serf
+
+* Resolvendo Desafios de Live Streaming em Go
+
+Streaming
+- Encodificação do Video
+- Inserção dinamica de anúncios
+- Armazenamento distribuído de arquivos pré-processados
+
+
+Live streaming
+- Encodificação em tempo real
+- Regras de negocio em tempo real
+- Diversas programações com regras de negocio diferentes
+- Latencia, bit rate 
+
+Gopher play
+
+* Mitigando CVEs de aplicações Golang em produção
+- Weakness, Platform & Vulnerability
+- Metodos de pontuação, CVSS & EPSS
+- Software Bill Of Materials
+- SLSA & GitOps
+
+* Profile-Guided Optimization
+
+Compile, Profile in production, Build w/ profile, Profit!
+
+- Melhorar performance
+- Escape analysis
+- Bench mark != performance guessing
+- CPU profiling, memory profiling
+
+: .background images/background.png
+: .image images/ladder.svg
+
+* Perguntas? 
+.image images/any_questions_4.gif
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+- stop words, normalização, tokenização, fuzzing
+- Postgres
+- BleveSearch
+
+* Padrões de Concorrência em Go
+
+- Execução de automações por tempo
+
+Grupos de trabalhadores
+Pipelines
+Fan-In
+Fan-Out
+Janela Deslizante
+Processamento em Lote
+Sistema de Ticket
+
+* Escolhendo (ou não) o melhor ORM para o seu projeto
+
+- database/sql
+- sqlc
+- ent
+- pgx
+- bun
+- gorm
+
+* Encrypt, Decrypt and Sign data using Go
+: .image images/its-go-time.webp
+
+* GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
+
+- TinyGo
+
+.image images/tinygo.png
+
+* Hexagonal, Clean Architecture ou Domain-Driven Design?

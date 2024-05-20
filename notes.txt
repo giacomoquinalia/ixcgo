@@ -1,0 +1,4 @@
+https://talks.godoc.org/github.com/drashtived03/goslidesexample/sample.slide#1
+
+https://go-talks.appspot.com/github.com/drashtived03/goslidesexample/sample.slide#1
+
