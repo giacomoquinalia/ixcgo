@@ -12,6 +12,7 @@ bruno.spolavori@ixcsoft.com.br
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .caption por [[https://www.youtube.com/watch?v=Ki69rMAnkv4][Wesley Willians]]
+.background background2.png
 
 Não apenas uma linguagem: uma plataforma end-to-end.
 
@@ -126,6 +127,7 @@ Arquitetura
 .image images/slog_arch_3.png 450 900
 
 * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+.background background2.png
 
 Níveis
 
