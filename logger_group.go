@@ -3,7 +3,6 @@ package main
 import (
 	"log/slog"
 	"os"
-	"time"
 )
 
 // START OMIT
@@ -14,7 +13,6 @@ func main() {
 		slog.String("name", "Luz da cozinha"),
 		slog.String("room", "6° andar"),
 		slog.String("local", "Prédio IXC Soft"),
-		slog.Time("now", time.Now()),
 		slog.Group("metadata", "foo", "bar"),
 	)
 }

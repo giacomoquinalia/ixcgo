@@ -1,5 +1,5 @@
 Gophercon Brasil 2024
-29 Maio
+04 Junho
 
 Giácomo Quinalia & Bruno Spolavori
 giacomo.quinalia@gmail.com
@@ -8,7 +8,7 @@ giacomo.quinalia@gmail.com
 .image images/bit.ly_ixcgo.png 600 600
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-.caption por [[https://instagram.com/reneefrench][Wesley Willians]]
+.caption por [[https://www.youtube.com/watch?v=Ki69rMAnkv4][Wesley Willians]]
 
 Não apenas uma linguagem: uma plataforma end-to-end.
 
@@ -96,8 +96,9 @@ Mercado livre
 .image images/any_questions_1.png
 
 * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+.caption por [[https://www.youtube.com/watch?v=xszQjCqLX6w][André Leoni]]
 
-Structured Logging with slog
+Logs estruturados com slog
 
 - Performance
 - Uso de memória
@@ -186,14 +187,152 @@ Gopher play
 - Software Bill Of Materials
 - SLSA & GitOps
 
+
 * Profile-Guided Optimization
 
-Compile, Profile in production, Build w/ profile, Profit!
+Técnica de otimização do compilador
 
-- Melhorar performance
+- CPU profiling & Memory profiling
+- Destinado para ambiente de produção
+- 2-14% em melhora de performance
+
+Workflow
+
+- Compilar e lançar um binário inicial (sem PGO).
+- Coletar profile de ambiente de produção.
+- Quando chegar a hora de lançar um binário atualizado, compilar a partir da fonte mais recente e fornecer o profile de produção.
+- Voltar ao passo 2
+
+* Profile-Guided Optimization
+
+    package main
+
+    import "runtime/pprof"
+
+    func main() {
+        f, err := os.Create("cpu-profile.pprof")
+        if err != nil {
+            fmt.Println("Tratem os erros :)", err)
+            return
+        }
+        
+        pprof.StartCPUProfile(f)
+        defer pprof.StopCPUProfile()
+
+        someWork()
+    }
+
+* Profile-Guided Optimization
+
+    package main
+    
+    import (
+        "net/http"
+        _ "net/http/pprof"
+    )
+
+    func main() {
+        f, err := os.Create("cpu-profile.pprof")
+        if err != nil {
+            fmt.Println("Tratem os erros :)", err)
+            return
+        }
+        
+        pprof.StartCPUProfile(f)
+        defer pprof.StopCPUProfile()
+
+        http.ListenAndServe(":8090", nil)
+    }
+
+* Profile-Guided Optimization
+
+O que será otimizado?
+
+- Inlining hot functions
+- Devirtualization
 - Escape analysis
-- Bench mark != performance guessing
-- CPU profiling, memory profiling
+- Block Reordering
+
+* Profile-Guided Optimization
+Inlining
+
+:
+    func add(a, b int) int {
+        return a + b
+    }
+
+    func main() {
+        c := add(1, 2)
+    }
+:
+    func main() {
+        a := 1
+        b := 2
+        c := a + b
+    }
+:
+    func main() {
+        c := 1 + 2
+    }
+:
+    func main() {
+        c := 3
+    }
+
+
+* Profile-Guided Optimization
+Devirtualization
+
+    type Reader interface {
+        Read(p []byte) (n int, err error)
+    }
+
+    func main() {
+        f, _ := os.Open("foo.txt")
+        var r io.Reader = f
+        r.Read(b)
+    }
+:
+    ...
+    
+    if f, ok := r.(*os.File); ok {
+        f.Read(b)
+    } else {
+        r.Read(b)
+    }
+
+* Profile-Guided Optimization
+Block reordering
+
+    if conditionA {
+        // Bloco A
+        // Acessado com MENOS frequência
+    } else {
+        // Bloco B
+        // Acessado com MAIS frequência
+    }
+
+O PGO pode escolher entre negar a condição A ou testar diretamente a condição B
+
+    if conditionB {
+        // Bloco B
+        // Acessado com MAIS frequência
+    } else {
+        // Bloco A
+        // Acessado com MENOS frequência
+    }
+
+* Profile-Guided Optimization
+Escape analysis
+
+
+: O que *não* invalida o profile?
+: - Alterações em um arquivo fora de uma hot function
+: - Mover uma função para outro arquivo do *mesmo* *package*
+: O que *invalida* o profile?
+: - Mudanças dentro de uma hot function
+: - Renomear uma função
+: - Mover uma função para outro pacote
 
 : .background images/background.png
 : .image images/ladder.svg
@@ -203,30 +342,202 @@ Compile, Profile in production, Build w/ profile, Profit!
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
-- stop words, normalização, tokenização, fuzzing
-- Postgres
-- BleveSearch
+Pesquisa: Um filme do Arnold Shuazineguer
+
+- *Stop* *words*: Remoção de termos neutros
+- *Normalização*: Normalizar capitalização, acentuação, etc
+- *Tokenização*: Tokenização de conteúdo textual
+- *Fuzziness*: similaridade de conteúdo
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+Index invertido
+
+.image images/inverted_index.png 450 900
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+Postgres
+
+    ALTER TABLE movies ADD COLUMN ts_title tsvector
+    GENERATED ALWAYS AS (to_tsvector('english', title))
+    STORED;
+
+GIN = Generalized Inverted Index
+
+    CREATE INDEX ts_idx ON movies USING GIN (ts_title)
+:
+Query:
+
+    SELECT to_tsvector('portuguese', 'um filme do arnold')
+
+Resultado:
+
+    'arnold': 4 'film': 2
+
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+BleveSearch
+: .image images/blevesearch.png
+
+Mapeamento de campos dinâmicos
+
+    mapping := bleve.NewIndexMapping()
+    index, err := bleve.New("index.bleve", mapping)
+    index, err := bleve.NewMemOnly(mapping)
+
+Mapeamento
+
+    document := bleve.NewDocumentMapping()
+    field := bleve.NewTextFieldMapping()
+    field.Analyser = "en"
+    document.AddFieldMappingsAt("title", field)
+
+    field.Index = false // armazena, mas não indexa
+    field.Store = false // não armazena, mas indexa
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+Index
+
+    type Movie struct {
+        Title       string `json:"title"`
+        Description string `json:"description"`
+    }
+
+    err := index.Index("star-wars", Movie{
+        Title:       "Star wars",
+        Description: "A long time ago in a galaxy...",
+    })
+
+Tipos de busca
+
+    bleve.NewPhraseQuery("arnold schwarzenegger")
+    bleve.NewMatchQuery("arnold")
+    bleve.NewPrefixQuery("arnold")
+    bleve.NewQueryStringQuery("arnold")
+    bleve.NewFuzzyQuery("arnoud")
+    bleve.NewGeoDistanceQuery(lt,ln,"1km")
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+Busca
+
+    query := bleve.NewFuzzyQuery("arnold")
+    searchRequest := bleve.NewSearchRequest(query)
+    results, _ := index.Search(searchRequest)
+    for _, result := range results {
+        // manipular os resultados (map[string]interface)
+    }
+
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+E se eu tiver MILHÕES/BILHÕES de registros?
+
+- Escrita X Leitura
+- Limitação física
+
+.image images/search_engines.png 350 700
+
+* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+
+80% Infraestrutura, 15% Experimentação, 5%  Código
+Analisadores complexos demandam processamento 💸
+
+.image images/sharding.png
 
 * Padrões de Concorrência em Go
 
-- Execução de automações por tempo
+Como Go trabalha com concorrência?
 
-Grupos de trabalhadores
-Pipelines
-Fan-In
-Fan-Out
-Janela Deslizante
-Processamento em Lote
-Sistema de Ticket
+- Goroutines
+- Channels
+
+    func main() {
+        ch := make(chan string)
+        
+        go func() {
+            ch <- "Hello, world!"
+        }()
+
+        fmt.Println(<-ch)
+    }
+
+* Generator pattern
+.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+
+* Worker group
+.play concurrency_patterns_worker_group_pattern.go /^//START/,/^//END/
+
+* Pipelines
+.play concurrency_patterns_pipeline_pattern.go /^//START/,/^//END/
+
+* Fan-In
+.play concurrency_patterns_fanin_pattern.go /^//START/,/^//END/
+
+* Fan-Out
+.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+
+* Janela Deslizante
+.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+
+* Processamento em Lote
+.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+
+* Sistema de Ticket
+.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
 
 * Escolhendo (ou não) o melhor ORM para o seu projeto
 
+ORM é uma técnica que apresenta uma ponte entre os objetos do nosso domínio e tabelas de dados relacionais, como o Postgres e MySQL.
+
+Alguns fatores podem influenciar na decisão de adotar ou não uma ferramenta de ORM em um projeto.
+
+- Escopo
+- Criticidade
+- Prazo de entrega
+- Volume de dados a serem processados
+
+* Escolhendo (ou não) o melhor ORM para o seu projeto
+
+Vantagens
+
+- Produtividade
+- Developer-friendly
+- Mecanismos que ajudam a mitigar problemas de segurança
+- Suporte a diferentes bases de dados
+
+Desvantagens
+
+- Condicionam o uso de SELECT * FROM
+- Menos controle
+- Curva de aprendizado da ferramenta
+- SQL não é uma sub-linguagem
+- Falta de flexibilidade para atender queries complexas
+- A ferramenta de ORM também pode ser burlada
+
+* Escolhendo (ou não) o melhor ORM para o seu projeto
+
+Escrita e execução de queries nativas
+
 - database/sql
-- sqlc
-- ent
 - pgx
+
+SQL builders e SQL-First ORMs
+
 - bun
+- squirrel
+
+Code-first ORMs
+
 - gorm
+- ent
+
+Geradores de código Go a partir de queries SQL
+
+- sqlc
 
 * Encrypt, Decrypt and Sign data using Go
 : .image images/its-go-time.webp
@@ -237,4 +548,4 @@ Sistema de Ticket
 
 .image images/tinygo.png
 
-* Hexagonal, Clean Architecture ou Domain-Driven Design?
+: * Hexagonal, Clean Architecture ou Domain-Driven Design?
