@@ -1,8 +1,8 @@
-Gophercon Brasil 2024
+Tecnologia Go: direto da GopherCon 2024
 04 Junho
 
 Giácomo Quinalia 
-giacomo.quinalia@gmail.com
+giacomo.quinalia@ixcsoft.com.br
 
 Bruno Spolavori
 bruno.spolavori@ixcsoft.com.br
@@ -15,13 +15,13 @@ bruno.spolavori@ixcsoft.com.br
 
 Não apenas uma linguagem: uma plataforma end-to-end.
 
-- Promessa de compatibilidade: nunca haverá a versão 2.0
 - Testes
 - Formatação
 - Gerenciamento de dependências nativo
 - Profiling
 - Segurança
 - go command
+- Promessa de compatibilidade: nunca haverá a versão 2.0
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 
@@ -51,10 +51,6 @@ Necessidade de aplicações seguras
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/companies_using_go_1.png 200 700
 .image images/cloud__and_open_source.png 300 800
-
-* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-Mercado livre
-.image images/mercado_livre_languages_stats.png 500 850
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 Mercado livre
@@ -88,8 +84,8 @@ Mercado livre
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/language_comparison_3.png
 
-* Perguntas?
-.image images/any_questions_2.png
+: * Perguntas?
+: .image images/any_questions_2.png
 
 * Comparando Threads: Threads convencionais vs a inovação de Go
 
@@ -101,8 +97,8 @@ Threads OS:
 Green Threads ou Go Routines
 - Comparação entre outras linguagens e Golang 
 
-* Perguntas?
-.image images/any_questions_1.png
+: * Perguntas?
+: .image images/any_questions_1.png
 
 * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
 .caption por [[https://www.youtube.com/watch?v=xszQjCqLX6w][André Leoni]]
@@ -156,12 +152,12 @@ JSON handler
 With
 .play logger_with.go /^//START/,/^//END/
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-Group
-.play logger_group.go /^//START/,/^//END/
+: * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+: Group
+: .play logger_group.go /^//START/,/^//END/
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-.image images/slog_zap.png 500 900
+: * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+: .image images/slog_zap.png 500 900
 
 * Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
 .caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
@@ -251,12 +247,14 @@ E é possivel reduzir mais!
 * Resolvendo Desafios de Live Streaming em Go
 
 Streaming
+
 - Encodificação do Video
 - Inserção dinamica de anúncios
 - Armazenamento distribuído de arquivos pré-processados
 
 
 Live streaming
+
 - Encodificação em tempo real
 - Legendas em tempo real
 - Regras de negocio em tempo real
@@ -274,6 +272,7 @@ Live streaming
 - SLSA & GitOps
 
 Software Suply Chain
+
 - Verificação de vulnerabilidades durante toda a cadeia de desenvolvimento
 - Registries
 - Bibliotecas externas
@@ -432,8 +431,8 @@ Escape analysis
 : .background images/background.png
 : .image images/ladder.svg
 
-* Perguntas? 
-.image images/any_questions_4.gif
+: * Perguntas? 
+: .image images/any_questions_4.gif
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
