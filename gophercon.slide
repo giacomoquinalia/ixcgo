@@ -1,8 +1,11 @@
 Gophercon Brasil 2024
 04 Junho
 
-Giácomo Quinalia & Bruno Spolavori
+Giácomo Quinalia 
 giacomo.quinalia@gmail.com
+
+Bruno Spolavori
+bruno.spolavori@ixcsoft.com.br
 
 * bit.ly/ixcgo
 .image images/bit.ly_ixcgo.png 600 600
@@ -89,7 +92,13 @@ Mercado livre
 .image images/any_questions_2.png
 
 * Comparando Threads: Threads convencionais vs a inovação de Go
-- Diferenças de custos, nova thead e troca de contexto
+
+Threads OS:
+ - Syscall
+ - Troca de contexto, atualizar registradores com dados da memoria
+ - Custa aproximadamente 4MB de ram
+
+Green Threads ou Go Routines
 - Comparação entre outras linguagens e Golang 
 
 * Perguntas?
@@ -155,15 +164,89 @@ Group
 .image images/slog_zap.png 500 900
 
 * Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
-- Câmeras
-- Desafios em desenvolver um hardware proprietário
-2200 clientes; 6000 câmeras apontadas para a rua
-2000 câmeras internas; 190000 usuários
-.image images/image.png
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+
+- Desafios semelhantes aos nossos com as cameras, porem com hardware proprietario
+- OpenWRT
+- Estudaram o uso de C, C++, Rust, Python (Interpletado e Compilado) e Lua
+ 
+Aproximadamente 2200 clientes com 6000 câmeras apontadas para a rua
+2000 câmeras internas. Totalizando 190.000 usuários finais.
+
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+
+Problemas:
+ - Restrições de Hardware
+ - Problemas com os Chineses (API, Documentação)
+ - Converter RTSP para WebRTC
+ - Monitoramento & Tunelamento 
+
+
+Suluções com Go:
+ - Go Routines
+ - Channels
+ - Implementa protocolos de comunicação baixo nivel
+ - Facil de compilar
+ - Tem cara de C
+
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+.image images/Embarcados_FirstSetup.jpg
+
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+.image images/Embarcados_FinalSetup.jpg
+
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+.image images/Embarcados_Hardware.jpg
+
+* GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
+.caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA][Rafael Mateus]]
+
+
+    Experiência com IoT na Industria, Modbus, EtherCAT
+
+Vantagens:
+ - Concorrencia nativa (Go routines e Channels)
+ - Baixo consumo de Recursos
+ - Facil de compilar o mesmo codigo em diversos processadores
+ - Periph.io
+
+
+
+* GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
+.caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA&][Rafael Mateus]]
+
+.image images/tinygo.png
+TinyGo:
+ - Plataforma Go para desenvolvimento em embarcados
+ - Compila para microprocessadores, PIC, AVR (Arduino), GBA
+ - Implementa nativamente Protocolos de comunicação de baixo nivel, I2C, SPI, UART
+ - Tem ferramentas para realizar o flash nos dispositivos suportados
+
+* GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
+.caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA&][Rafael Mateus]]
+ 
+Hello World
+ - Golang > 1.9Mb 
+ - TinyGo > 251Mb
+
+Hello World sem debugger
+ - Golang > 837Kb 
+ - TinyGo > 10Kb
+
+E é possivel reduzir mais!
 
 * Serviços que Fofocam: Desvendando a Magia do Serf em Go
 
-- Serf
+    O Problema:
+    Resolver a resolução de nomes na borda da Vercel em 10ms
+
+- Serf, protolo da hashcorp, para gossip
+- DNS distribuido
+- Golang
 
 * Resolvendo Desafios de Live Streaming em Go
 
@@ -175,17 +258,29 @@ Streaming
 
 Live streaming
 - Encodificação em tempo real
+- Legendas em tempo real
 - Regras de negocio em tempo real
 - Diversas programações com regras de negocio diferentes
 - Latencia, bit rate 
 
-Gopher play
+    Gopher play
 
 * Mitigando CVEs de aplicações Golang em produção
-- Weakness, Platform & Vulnerability
+.caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
+
+- Weakness, Platform & Vulnerability (CWE, CVE, CPE)
 - Metodos de pontuação, CVSS & EPSS
 - Software Bill Of Materials
 - SLSA & GitOps
+
+Software Suply Chain
+- Verificação de vulnerabilidades durante toda a cadeia de desenvolvimento
+- Registries
+- Bibliotecas externas
+- Ambiente de desenvolvimento
+- Ambiente de build
+
+Golang já possui SBOM
 
 
 * Profile-Guided Optimization
@@ -540,12 +635,33 @@ Geradores de código Go a partir de queries SQL
 - sqlc
 
 * Encrypt, Decrypt and Sign data using Go
-: .image images/its-go-time.webp
+.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
+Hash:
+ - Deterministico
+ - Efeito avalanche
+ - Perda de dados
+ - Rapido
 
-* GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
+ MD5
+ SHA
+ Argon2
 
-- TinyGo
+* Encrypt, Decrypt and Sign data using Go
+.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
+Chave Simetrica:
+ - Mesma chave encripta e decripta
 
-.image images/tinygo.png
+ AES
+ DES
+ Twofish
+
+* Encrypt, Decrypt and Sign data using Go
+.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
+Chave Publica:
+ - Par de chaves, numeros primos(RSA) ou curva eliptica(ECC)
+ - Uma chave privada e uma chave Publica
+ - Assinar um dado
+ - Encriptar um dado
+
 
 : * Hexagonal, Clean Architecture ou Domain-Driven Design?
