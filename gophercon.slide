@@ -235,15 +235,6 @@ Hello World sem debugger
 
 E é possivel reduzir mais!
 
-* Serviços que Fofocam: Desvendando a Magia do Serf em Go
-
-    O Problema:
-    Resolver a resolução de nomes na borda da Vercel em 10ms
-
-- Serf, protolo da hashcorp, para gossip
-- DNS distribuido
-- Golang
-
 * Resolvendo Desafios de Live Streaming em Go
 
 Streaming
@@ -535,12 +526,12 @@ E se eu tiver MILHÕES/BILHÕES de registros?
 
 .image images/search_engines.png 350 700
 
-* Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+: * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
-80% Infraestrutura, 15% Experimentação, 5%  Código
-Analisadores complexos demandam processamento 💸
+: 80% Infraestrutura, 15% Experimentação, 5%  Código
+: Analisadores complexos demandam processamento 💸
 
-.image images/sharding.png
+: .image images/sharding.png
 
 * Padrões de Concorrência em Go
 
