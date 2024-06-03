@@ -90,12 +90,12 @@ Mercado livre
 
 * Comparando Threads: Threads convencionais vs a inovação de Go
 
-Threads OS:
  - Syscall
  - Troca de contexto, atualizar registradores com dados da memoria
  - Custa aproximadamente 4MB de ram
+.background images/multithread.png  
 
-Green Threads ou Go Routines
+* Green Threads ou Go Routines
 - Comparação entre outras linguagens e Golang 
 
 : * Perguntas?
@@ -163,13 +163,25 @@ With
 
 * Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
 .caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+    Aproximadamente 2200 clientes com 6000 câmeras apontadas para a rua
+    2000 câmeras internas. Totalizando 190.000 usuários finais.
 
-- Desafios semelhantes aos nossos com as cameras, porem com hardware proprietario
+- Desafios semelhantes aos nossos, porem com hardware proprietario
 - OpenWRT
 - Estudaram o uso de C, C++, Rust, Python (Interpletado e Compilado) e Lua
+.image images/Embarcados_linguagens.jpg
  
-Aproximadamente 2200 clientes com 6000 câmeras apontadas para a rua
-2000 câmeras internas. Totalizando 190.000 usuários finais.
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+.image images/Embarcados_FirstSetup.jpg
+
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+.image images/Embarcados_FinalSetup.jpg
+
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+.image images/Embarcados_Hardware.jpg 500 1000
 
 * Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
 .caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
@@ -188,23 +200,12 @@ Suluções com Go:
  - Facil de compilar
  - Tem cara de C
 
-* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
-.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
-.image images/Embarcados_FirstSetup.jpg
-
-* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
-.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
-.image images/Embarcados_FinalSetup.jpg
-
-* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
-.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
-.image images/Embarcados_Hardware.jpg
 
 * GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
 .caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA][Rafael Mateus]]
 
 
-    Experiência com IoT na Industria, Modbus, EtherCAT
+    Experiência com IoT na Industria, dosagem quimica, leitura de sensores, Modbus, EtherCAT
 
 Vantagens:
  - Concorrencia nativa (Go routines e Channels)
@@ -218,7 +219,6 @@ Vantagens:
 .caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA&][Rafael Mateus]]
 
 .image images/tinygo.png
-TinyGo:
  - Plataforma Go para desenvolvimento em embarcados
  - Compila para microprocessadores, PIC, AVR (Arduino), GBA
  - Implementa nativamente Protocolos de comunicação de baixo nivel, I2C, SPI, UART
@@ -238,23 +238,29 @@ Hello World sem debugger
 E é possivel reduzir mais!
 
 * Resolvendo Desafios de Live Streaming em Go
+.caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
 
-Streaming
+Streaming On Demand
 
 - Encodificação do Video
+- Taxa de bits adaptativa
+- Multiplos canais de audio
 - Inserção dinamica de anúncios
 - Armazenamento distribuído de arquivos pré-processados
+.image images/Streaming.jpg 210 1000
+* Resolvendo Desafios de Live Streaming em Go
+.caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
 
-
-Live streaming
+Live Streaming
 
 - Encodificação em tempo real
 - Legendas em tempo real
 - Regras de negocio em tempo real
 - Diversas programações com regras de negocio diferentes
 - Latencia, bit rate 
+- Geolocalização
 
-    Gopher play
+ Gopher play
 
 * Mitigando CVEs de aplicações Golang em produção
 .caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
@@ -263,6 +269,10 @@ Live streaming
 - Metodos de pontuação, CVSS & EPSS
 - Software Bill Of Materials
 - SLSA & GitOps
+.image images/gopher_hacker.png 300 400
+
+* Mitigando CVEs de aplicações Golang em produção
+.caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
 
 Software Suply Chain
 
@@ -628,15 +638,17 @@ Geradores de código Go a partir de queries SQL
 
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
+
 Hash:
  - Deterministico
  - Efeito avalanche
  - Perda de dados
  - Rapido
 
- MD5
- SHA
- Argon2
+.background images/hash.png
+
+.play crypto/hash.go /^//START/,/^//END/
+
 
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
@@ -646,14 +658,16 @@ Chave Simetrica:
  AES
  DES
  Twofish
+.play crypto/asimetric.go /^//START/,/^//END/
 
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
-Chave Publica:
+Chave Assimetrica:
  - Par de chaves, numeros primos(RSA) ou curva eliptica(ECC)
  - Uma chave privada e uma chave Publica
  - Assinar um dado
  - Encriptar um dado
+.play crypto/asimetric.go /^//START/,/^//END/
 
 
 : * Hexagonal, Clean Architecture ou Domain-Driven Design?
