@@ -14,6 +14,19 @@ func main() {
 	}
 }
 
+func generator(msg string) <-chan string {
+	input := make(chan string)
+	go func() {
+		for i := 0; ; i++ {
+			input <- fmt.Sprintf("%s %d", msg, i)
+			time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+		}
+	}()
+	return input
+}
+
+// END OMIT
+
 func fanIn(input1, input2 <-chan string) <-chan string {
 	output := make(chan string)
 	go func() {
@@ -27,17 +40,4 @@ func fanIn(input1, input2 <-chan string) <-chan string {
 		}
 	}()
 	return output
-}
-
-// END OMIT
-
-func generator(msg string) <-chan string {
-	input := make(chan string)
-	go func() {
-		for i := 0; ; i++ {
-			input <- fmt.Sprintf("%s %d", msg, i)
-			time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
-		}
-	}()
-	return input
 }

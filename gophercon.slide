@@ -100,13 +100,16 @@ Evolução das linguagens no Mercado Livre no período de 2019 a 2023
 : .image images/any_questions_2.png
 
 * Comparando Threads: Threads convencionais vs a inovação de Go
+.caption por [[https://youtu.be/ve4PRlUw7Io?si=zs2SZa1gUZkrvSHC][Ana Gabriela Franco]]
 
  - Syscall
+ - Scheduler
  - Troca de contexto, atualiza registradore com dados da memoria
  - Custa aproximadamente 4MB de ram
 .background images/multithread.png  
 
 * Comparando Threads: Threads convencionais vs a inovação de Go
+.caption por [[https://youtu.be/ve4PRlUw7Io?si=zs2SZa1gUZkrvSHC][Ana Gabriela Franco]]
 Inovação de Go: *Goroutines*
 
 - Conceitualmente similares a threads de kernel gerenciadas pelo SO, porém *gerenciadas* *inteiramente* *pelo* *runtime* *do* *Go*
@@ -116,6 +119,42 @@ Inovação de Go: *Goroutines*
 - GopherCon 2018: Kavya Joshi - The Scheduler Saga
 
 .html html/15.html
+
+* Encrypt, Decrypt and Sign data using Go
+.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
+
+Hash:
+
+- Deterministico
+- Efeito avalanche
+- Perda de dados
+- Rapido
+
+.background images/hash.png
+
+.play crypto/hash.go /^//START/,/^//END/
+
+
+* Encrypt, Decrypt and Sign data using Go
+.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
+Chave Simetrica:
+
+- Mesma chave encripta e decripta
+
+ AES
+ DES
+ Twofish
+.play crypto/asimetric.go /^//START/,/^//END/
+
+* Encrypt, Decrypt and Sign data using Go
+.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
+Chave Assimetrica:
+
+- Par de chaves, numeros primos(RSA) ou curva eliptica(ECC)
+- Uma chave privada e uma chave Publica
+- Assinar um dado
+- Encriptar um dado
+.play crypto/asimetric.go /^//START/,/^//END/
 
 * Padrões de Concorrência em Go
 .caption por [[https://www.youtube.com/watch?v=ajsxiMPazT8][Cássio Botaro]]
@@ -178,15 +217,19 @@ Como Go trabalha com concorrência?
 * Padrões de Concorrência em Go
 *Fan-In*: processar múltiplas entradas e combinar em uma saída
 
-    func generator(msg string) <-chan string {
-        input := make(chan string)
+    func fanIn(input1, input2 <-chan string) <-chan string {
+        output := make(chan string)
         go func() {
-            for i := 0; ; i++ {
-                input <- fmt.Sprintf("%s %d", msg, i)
-                time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+            for {
+                select {
+                case v := <-input1:
+                    output <- v
+                case v := <-input2:
+                    output <- v
+                }
             }
-        }()
-        return input
+        }() 
+        return output
     }
 
 * Padrões de Concorrência em Go
@@ -333,53 +376,6 @@ Hello World sem debugger
  - TinyGo > 10Kb
 
 E é possivel reduzir mais!
-
-* Resolvendo Desafios de Live Streaming em Go
-.caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
-
-Streaming On Demand
-
-- Encodificação do Video
-- Taxa de bits adaptativa
-- Multiplos canais de audio
-- Inserção dinamica de anúncios
-- Armazenamento distribuído de arquivos pré-processados
-.image images/Streaming.jpg 210 1000
-* Resolvendo Desafios de Live Streaming em Go
-.caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
-
-Live Streaming
-
-- Encodificação em tempo real
-- Legendas em tempo real
-- Regras de negocio em tempo real
-- Diversas programações com regras de negocio diferentes
-- Latencia, bit rate 
-- Geolocalização
-
- Gopher play
-
-* Mitigando CVEs de aplicações Golang em produção
-.caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
-
-- Weakness, Platform & Vulnerability (CWE, CVE, CPE)
-- Metodos de pontuação, CVSS & EPSS
-- Software Bill Of Materials
-- SLSA & GitOps
-.image images/gopher_hacker.png 300 400
-
-* Mitigando CVEs de aplicações Golang em produção
-.caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
-
-Software Suply Chain
-
-- Verificação de vulnerabilidades durante toda a cadeia de desenvolvimento
-- Registries
-- Bibliotecas externas
-- Ambiente de desenvolvimento
-- Ambiente de build
-
-Golang já possui SBOM
 
 * Profile-Guided Optimization (PGO)
 .caption por [[https://www.youtube.com/watch?v=V2LSnbvylz4][Alex Rios]]
@@ -640,6 +636,32 @@ E se eu tiver MILHÕES/BILHÕES de registros?
 
 : .image images/sharding.png
 
+
+* Resolvendo Desafios de Live Streaming em Go
+.caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
+
+Streaming On Demand
+
+- Encodificação do Video
+- Taxa de bits adaptativa
+- Multiplos canais de audio
+- Inserção dinamica de anúncios
+- Armazenamento distribuído de arquivos pré-processados
+.image images/Streaming.jpg 210 1000
+* Resolvendo Desafios de Live Streaming em Go
+.caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
+
+Live Streaming
+
+- Encodificação em tempo real
+- Legendas em tempo real
+- Regras de negocio em tempo real
+- Diversas programações com regras de negocio diferentes
+- Latencia, bit rate 
+- Geolocalização
+
+ Gopher play
+
 * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
 .caption por [[https://www.youtube.com/watch?v=xszQjCqLX6w][André Leoni]]
 
@@ -702,6 +724,28 @@ With
 : * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
 : .image images/slog_zap.png 500 900
 
+* Mitigando CVEs de aplicações Golang em produção
+.caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
+
+- Weakness, Platform & Vulnerability (CWE, CVE, CPE)
+- Metodos de pontuação, CVSS & EPSS
+- Software Bill Of Materials (SBOM)
+- SLSA & GitOps
+.image images/gopher_hacker.png 300 400
+
+* Mitigando CVEs de aplicações Golang em produção
+.caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
+
+Software Suply Chain
+
+- Verificação de vulnerabilidades durante toda a cadeia de desenvolvimento
+- Registries
+- Bibliotecas externas
+- Ambiente de desenvolvimento
+- Ambiente de build
+
+Golang já possui SBOM
+
 * Escolhendo (ou não) o melhor ORM para o seu projeto
 
 ORM é uma técnica que apresenta uma ponte entre os objetos do nosso domínio e tabelas de dados relacionais, como o Postgres e MySQL.
@@ -751,41 +795,3 @@ Code-first ORMs
 Geradores de código Go a partir de queries SQL
 
 - sqlc
-
-* Encrypt, Decrypt and Sign data using Go
-.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
-
-Hash:
- - Deterministico
- - Efeito avalanche
- - Perda de dados
- - Rapido
-
-.background images/hash.png
-
-: .play crypto/hash.go /^//START/,/^//END/
-
-
-* Encrypt, Decrypt and Sign data using Go
-.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
-Chave Simetrica:
-
-- Mesma chave encripta e decripta
-
- AES
- DES
- Twofish
-: .play crypto/asimetric.go /^//START/,/^//END/
-
-* Encrypt, Decrypt and Sign data using Go
-.caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
-Chave Assimetrica:
-
-- Par de chaves, numeros primos(RSA) ou curva eliptica(ECC)
-- Uma chave privada e uma chave Publica
-- Assinar um dado
-- Encriptar um dado
-.play crypto/asimetric.go /^//START/,/^//END/
-
-
-: * Hexagonal, Clean Architecture ou Domain-Driven Design?
