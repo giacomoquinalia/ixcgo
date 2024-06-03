@@ -8,7 +8,9 @@ import (
 // START OMIT
 func main() {
 	handler := slog.NewTextHandler(os.Stdout, nil)
+
 	logger := slog.New(handler)
+
 	logger.Info("Dispositivo criado",
 		"name", "Luz da cozinha",
 		"room", "6° andar",

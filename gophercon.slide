@@ -10,19 +10,31 @@ bruno.spolavori@ixcsoft.com.br
 * bit.ly/ixcgo
 .image images/bit.ly_ixcgo.png 600 600
 
+* GopherCon Brasil
+
+- Florianópolis, 09 e 10 de Maio
+- Mais de 1000 participantes
+- Desde 2016
+- Tema: diversidade
+- Workshop com Wesley Willians
+
+.image images/gophercon_brasil.png
+
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .caption por [[https://www.youtube.com/watch?v=Ki69rMAnkv4][Wesley Willians]]
-.background background2.png
 
-Não apenas uma linguagem: uma plataforma end-to-end.
+"Go não é apenas uma linguagem de programação. É uma plataforma completa de ponta a ponta para a construção de sistemas para produção." - Camaron Balahan
 
 - Testes
-- Formatação
+- Formatação (gopls)
 - Gerenciamento de dependências nativo
 - Profiling
 - Segurança
-- go command
+- Multiplataforma
+- go <comando>
 - Promessa de compatibilidade: nunca haverá a versão 2.0
+
+.html html/4.html
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 
@@ -30,44 +42,43 @@ Mais receita, Menos custos, Menos riscos.
 
 Empresas precisam escalar suas operações
 
-- *performance*
+- *Extrema* *performance*
 
 Velocidade na entrega de suas soluções
 
-- *simplicidade*
+- *Foco* *na* *simplicidade*
 
 Economizar com infraestrutura
 
-- *eficiência*
+- *Eficiência* *no* *consumo* *dos* *recursos*
 
 Necessidade de aplicações seguras
 
-- *segurança*
+- *Recursos* *de* *segurança* *nativos*
 
-: Projetos open-source usando Go
-
-* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-.image images/go_is.png
+.html html/5.html
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-.image images/companies_using_go_1.png 200 700
-.image images/cloud__and_open_source.png 300 800
+Essa é a plataforma na versão atual: *1.22*
+.image images/go_complete_platform.png 400 890
+
+: .image images/go_is.png 450 1000
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-Mercado livre
-.image images/mercado_livre_languages_predict.png 540 840
+.image images/companies_using_go.png 500 1000
 
-: * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-: .image images/go_complete_platform.png
+* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+Evolução das linguagens no Mercado Livre no período de 2019 a 2023
+.image images/mercado_livre_languages_predict.png 500 840
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/total_go_users.png
 
-* Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-.image images/expect_use_languages.png 600 800
+: * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
+: .image images/expect_use_languages.png 600 800
 
-*
-.background images/last_year_languages_used.png
+: *
+: .background images/last_year_languages_used.png
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/users_satisfaction.png 400 900
@@ -95,71 +106,167 @@ Mercado livre
  - Custa aproximadamente 4MB de ram
 .background images/multithread.png  
 
-* Green Threads ou Go Routines
-- Comparação entre outras linguagens e Golang 
+* Comparando Threads: Threads convencionais vs a inovação de Go
+Inovação de Go: *Goroutines*
+
+- Conceitualmente similares a threads de kernel gerenciadas pelo SO, porém *gerenciadas* *inteiramente* *pelo* *runtime* *do* *Go*
+- Mais leves e baratas que threads de kernel: 2KB
+- Alta concorrência
+- Aproveitar o paralelismo: escalar para N cores
+- GopherCon 2018: Kavya Joshi - The Scheduler Saga
+
+.html html/15.html
 
 : * Perguntas?
 : .image images/any_questions_1.png
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-.caption por [[https://www.youtube.com/watch?v=xszQjCqLX6w][André Leoni]]
+* Padrões de Concorrência em Go
+.caption por [[https://www.youtube.com/watch?v=ajsxiMPazT8][Cássio Botaro]]
 
-Logs estruturados com slog
+Nivelamento: concorrência X paralelismo
 
-- Performance
-- Uso de memória
-- Extensibilidade
+Concorrência
 
-sirupsen/logrus (23.8k⭐️)
-uber-go/zap (20.5k⭐️) 
-rs/zerolog (9.4k⭐️)
+- É a capacidade de *lidar* múltiplas coisas simultaneamente
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-Arquitetura
-.image images/slog_arch_1.png 450 900
+Paralelismo
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-Arquitetura
-.image images/slog_arch_2.png 450 900
+- É a capacidade de *fazer* múltiplas coisas simultaneamente
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-Arquitetura
-.image images/slog_arch_3.png 450 900
+Mundo real: paralelismo COM concorrência
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-.background background2.png
+* Padrões de Concorrência em Go
 
-Níveis
+Como Go trabalha com concorrência?
 
-    const (
-        LevelDebug Level = -4
-        LevelInfo  Level = 0
-        LevelWarn  Level = 4
-        LevelError Level = 8
-    )
+- Goroutines: funções de execução independente
+- Channels: Um channel em Go fornece uma conexão entre goroutines, permitindo que se comuniquem
 
-- Levels são inteiros
-- Espaços para que possa ser criado levels customizados
-- Info é o level padrão
+    func main() {
+        ch := make(chan string)
+        
+        go func() {
+            ch <- "Hello, world!"
+        }()
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-Text handler
-.play text_logger.go /^//START/,/^//END/
+        fmt.Println(<-ch)
+    }
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-JSON handler
-.play json_logger.go /^//START/,/^//END/
+: Don't communicate by sharing memory, share memory by communicating.
 
-* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-With
-.play logger_with.go /^//START/,/^//END/
+.html html/48.html
 
-: * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-: Group
-: .play logger_group.go /^//START/,/^//END/
+* Padrões de Concorrência em Go
+*Generator* *pattern*: gera uma sequencia de valores que são usados para produzir alguma saída.
+.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
 
-: * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
-: .image images/slog_zap.png 500 900
+* Padrões de Concorrência em Go
+*Worker* *group*: funções que esperam entradas para realizar um trabalho
+.play concurrency_patterns_worker_group_pattern.go /^//START/,/^//END/
+
+* Padrões de Concorrência em Go
+*Worker* *group*: funções que esperam entradas para realizar um trabalho
+
+    func worker(id int, in <-chan int64, out chan<- int64, wg *sync.WaitGroup) {
+        for v := range in {
+            fmt.Printf("Worker %d está processando o valor %d\n", id, v)
+            time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+            out <- v
+        }
+        wg.Done()
+    }
+
+* Padrões de Concorrência em Go
+*Pipelines*: uma função escreve um valor em uma saída, e essa saída é a entrada de outra função
+.play concurrency_patterns_pipeline_pattern.go /^//START/,/^//END/
+
+* Padrões de Concorrência em Go
+*Fan-In*: processar múltiplas entradas e combinar em uma saída
+.play concurrency_patterns_fanin_pattern.go /^//START/,/^//END/
+
+* Padrões de Concorrência em Go
+*Fan-In*: processar múltiplas entradas e combinar em uma saída
+
+    func generator(msg string) <-chan string {
+        input := make(chan string)
+        go func() {
+            for i := 0; ; i++ {
+                input <- fmt.Sprintf("%s %d", msg, i)
+                time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+            }
+        }()
+        return input
+    }
+
+* Padrões de Concorrência em Go
+*Fan-Out*: 
+.play concurrency_patterns_fanout_pattern.go /^//START/,/^//END/
+
+* Padrões de Concorrência em Go
+
+    func fanOut(input <-chan int, outputs ...chan<- int) {
+        var wg sync.WaitGroup
+        for v := range input {
+            wg.Add(len(outputs))
+            for _, saida := range outputs {
+                go publish(saida, v, &wg)
+            }
+            wg.Wait()
+        }
+        for _, output := range outputs {
+            close(output)
+        }
+    }
+    func sequence(start, end int) <-chan int {
+        input := make(chan int)
+        go func() {
+            for i := start; i <= end; i++ {
+                input <- i
+            }
+            close(input)
+        }()
+        return input
+    }
+    func publish(output chan<- int, value int, wg *sync.WaitGroup) {
+        select {
+        case output <- value:
+        case <-time.After(1 * time.Second):
+        }
+        wg.Done()
+    }
+
+* Padrões de Concorrência em Go
+*Sistema* *de* *Ticket*: usado para controlar quando um determinado trabalho pode ser executado
+.play concurrency_patterns_ticket_pattern.go /^//START/,/^//END/
+
+* Padrões de Concorrência em Go
+*Sistema* *de* *Ticket*: 
+
+    func worker(tickets <-chan Ticket, work <-chan Work) {
+        for w := range work {
+            <-tickets // espera por um ticket
+            w()       // executa um trabalho
+        }
+    }
+
+    func boxOffice(tickets chan<- Ticket, timeout time.Duration, nTickets int) {
+        for {
+            for i := 0; i < nTickets; i++ {
+                tickets <- Ticket(i)
+            }
+
+            // espera até que mais tickets possam ser emitidos
+            <-time.After(timeout)
+        }
+    }
+
+
+: * Janela Deslizante
+: .play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+
+: * Processamento em Lote
+: .play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+
 
 * Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
 .caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
@@ -284,23 +391,29 @@ Software Suply Chain
 
 Golang já possui SBOM
 
-
-* Profile-Guided Optimization
+* Profile-Guided Optimization (PGO)
+.caption por [[https://www.youtube.com/watch?v=V2LSnbvylz4][Alex Rios]]
 
 Técnica de otimização do compilador
 
 - CPU profiling & Memory profiling
+- Visualização pelo browser e terminal
 - Destinado para ambiente de produção
-- 2-14% em melhora de performance
+- *2-14%* em melhora de performance
 
-Workflow
+Como aplicar o PGO?
 
-- Compilar e lançar um binário inicial (sem PGO).
-- Coletar profile de ambiente de produção.
-- Quando chegar a hora de lançar um binário atualizado, compilar a partir da fonte mais recente e fornecer o profile de produção.
-- Voltar ao passo 2
+*1.* Compilar e lançar um binário inicial (sem PGO).
+*2.* Coletar profile de ambiente de produção.
+*3.* Quando chegar a hora de lançar um binário atualizado, compilar a partir da fonte mais recente e fornecer o profile de produção.
+*4.* Voltar ao passo 2
 
-* Profile-Guided Optimization
+.html html/34.html
+
+* Profile-Guided Optimization (PGO)
+
+*runtime/pprof*
+Quando você deseja iniciar e parar a criação de profiling programaticamente e quando precisar de mais controle sobre o processo de criação de profiling. 
 
     package main
 
@@ -319,7 +432,10 @@ Workflow
         someWork()
     }
 
-* Profile-Guided Optimization
+* Profile-Guided Optimization (PGO)
+
+*net/http/pprof*
+Quando desejar ativar o profiling sob demanda do seu aplicativo em execução por meio de um servidor HTTP. 
 
     package main
     
@@ -341,17 +457,8 @@ Workflow
         http.ListenAndServe(":8090", nil)
     }
 
-* Profile-Guided Optimization
-
-O que será otimizado?
-
-- Inlining hot functions
-- Devirtualization
-- Escape analysis
-- Block Reordering
-
-* Profile-Guided Optimization
-Inlining
+* Profile-Guided Optimization (PGO)
+Inlining hot functions
 
 :
     func add(a, b int) int {
@@ -376,14 +483,34 @@ Inlining
         c := 3
     }
 
+* Profile-Guided Optimization (PGO)
+*Escape* *analysis*: a referência para um objeto "escapa" da função?
 
-* Profile-Guided Optimization
+*Heap*: pode armazenar qualquer coisa. Garbage collector cuida da memória
+*Stack*: cresce a cada chamada, encolhe a retorno. Só podem armazenar valores que "morrem" antes de retornar
+
+    type Foo struct { a, b int }
+
+    func NewFoo(a, b int) *Foo {
+        return &Foo{a: a, b: b}
+    }
+
+    func Compute() int {
+        f := NewFoo(1, 2) // &Foo{a: 1, b: 2} 
+        c := f.a + f.b
+        return c
+    }
+
+.html html/41.html
+
+
+* Profile-Guided Optimization (PGO)
 Devirtualization
 
     type Reader interface {
         Read(p []byte) (n int, err error)
     }
-
+:
     func main() {
         f, _ := os.Open("foo.txt")
         var r io.Reader = f
@@ -398,32 +525,7 @@ Devirtualization
         r.Read(b)
     }
 
-* Profile-Guided Optimization
-Block reordering
-
-    if conditionA {
-        // Bloco A
-        // Acessado com MENOS frequência
-    } else {
-        // Bloco B
-        // Acessado com MAIS frequência
-    }
-
-O PGO pode escolher entre negar a condição A ou testar diretamente a condição B
-
-    if conditionB {
-        // Bloco B
-        // Acessado com MAIS frequência
-    } else {
-        // Bloco A
-        // Acessado com MENOS frequência
-    }
-
-* Profile-Guided Optimization
-Escape analysis
-
-
-: O que *não* invalida o profile?
+: O que *não* invalida o profb ile?
 : - Alterações em um arquivo fora de uma hot function
 : - Mover uma função para outro arquivo do *mesmo* *package*
 : O que *invalida* o profile?
@@ -438,6 +540,7 @@ Escape analysis
 : .image images/any_questions_4.gif
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
+.caption por [[https://www.youtube.com/watch?v=1YU0GTF6EaU][Rodrigo Brito]]
 
 Pesquisa: Um filme do Arnold Shuazineguer
 
@@ -445,6 +548,8 @@ Pesquisa: Um filme do Arnold Shuazineguer
 - *Normalização*: Normalizar capitalização, acentuação, etc
 - *Tokenização*: Tokenização de conteúdo textual
 - *Fuzziness*: similaridade de conteúdo
+
+.image images/gopher_searching.png 300 400
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
@@ -454,7 +559,7 @@ Index invertido
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
-Postgres
+Postgres tsvector
 
     ALTER TABLE movies ADD COLUMN ts_title tsvector
     GENERATED ALWAYS AS (to_tsvector('english', title))
@@ -475,7 +580,7 @@ Resultado:
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
-BleveSearch
+BleveSearch - A modern text/numeric/geo-spatial/vector indexing library for Go
 : .image images/blevesearch.png
 
 Mapeamento de campos dinâmicos
@@ -545,46 +650,67 @@ E se eu tiver MILHÕES/BILHÕES de registros?
 
 : .image images/sharding.png
 
-* Padrões de Concorrência em Go
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+.caption por [[https://www.youtube.com/watch?v=xszQjCqLX6w][André Leoni]]
 
-Como Go trabalha com concorrência?
+Logs estruturados com slog
 
-- Goroutines
-- Channels
+- Performance
+- Uso de memória
+- Extensibilidade
 
-    func main() {
-        ch := make(chan string)
-        
-        go func() {
-            ch <- "Hello, world!"
-        }()
+Projetos mais populares:
 
-        fmt.Println(<-ch)
-    }
+- sirupsen/logrus (24.2k⭐️)
+- uber-go/zap (21.1k⭐️) 
+- rs/zerolog (10k⭐️)
 
-* Generator pattern
-.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+.html html/16.html
 
-* Worker group
-.play concurrency_patterns_worker_group_pattern.go /^//START/,/^//END/
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Arquitetura
+.image images/slog_arch_1.png 450 900
 
-* Pipelines
-.play concurrency_patterns_pipeline_pattern.go /^//START/,/^//END/
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Arquitetura
+.image images/slog_arch_2.png 450 900
 
-* Fan-In
-.play concurrency_patterns_fanin_pattern.go /^//START/,/^//END/
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Arquitetura
+.image images/slog_arch_3.png 450 900
 
-* Fan-Out
-.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Níveis
 
-* Janela Deslizante
-.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+    const (
+        LevelDebug Level = -4
+        LevelInfo  Level = 0
+        LevelWarn  Level = 4
+        LevelError Level = 8
+    )
 
-* Processamento em Lote
-.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+- Levels são inteiros
+- Espaços para que possa ser criado levels customizados
+- Info é o nível padrão
 
-* Sistema de Ticket
-.play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+Text handler
+.play text_logger.go /^//START/,/^//END/
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+JSON handler
+.play json_logger.go /^//START/,/^//END/
+
+* Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+With
+.play logger_with.go /^//START/,/^//END/
+
+: * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+: Group
+: .play logger_group.go /^//START/,/^//END/
+
+: * Conhecendo a "log/slog": A biblioteca de log da Standard Library do Go
+: .image images/slog_zap.png 500 900
 
 * Escolhendo (ou não) o melhor ORM para o seu projeto
 
