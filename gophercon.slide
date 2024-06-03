@@ -7,8 +7,8 @@ giacomo.quinalia@ixcsoft.com.br
 Bruno Spolavori
 bruno.spolavori@ixcsoft.com.br
 
-* bit.ly/ixcgo
-.image images/bit.ly_ixcgo.png 600 600
+* Acesse: bit.ly/goixc
+.image images/bit.ly_goixc.png 500 500
 
 * GopherCon Brasil
 
@@ -18,7 +18,7 @@ bruno.spolavori@ixcsoft.com.br
 - Tema: diversidade
 - Workshop com Wesley Willians
 
-.image images/gophercon_brasil.png
+.image images/gophercon_br.png 300 700
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .caption por [[https://www.youtube.com/watch?v=Ki69rMAnkv4][Wesley Willians]]
@@ -34,7 +34,7 @@ bruno.spolavori@ixcsoft.com.br
 - go <comando>
 - Promessa de compatibilidade: nunca haverá a versão 2.0
 
-.html html/4.html
+.html html/4
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 
@@ -59,8 +59,8 @@ Necessidade de aplicações seguras
 .html html/5.html
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
-Essa é a plataforma na versão atual: *1.22*
-.image images/go_complete_platform.png 400 890
+Plataforma na versão atual: *1.22*
+.image images/go_complete_platform.png 400 900
 
 : .image images/go_is.png 450 1000
 
@@ -117,9 +117,6 @@ Inovação de Go: *Goroutines*
 
 .html html/15.html
 
-: * Perguntas?
-: .image images/any_questions_1.png
-
 * Padrões de Concorrência em Go
 .caption por [[https://www.youtube.com/watch?v=ajsxiMPazT8][Cássio Botaro]]
 
@@ -135,6 +132,8 @@ Paralelismo
 
 Mundo real: paralelismo COM concorrência
 
+.html html/17.html
+
 * Padrões de Concorrência em Go
 
 Como Go trabalha com concorrência?
@@ -142,15 +141,7 @@ Como Go trabalha com concorrência?
 - Goroutines: funções de execução independente
 - Channels: Um channel em Go fornece uma conexão entre goroutines, permitindo que se comuniquem
 
-    func main() {
-        ch := make(chan string)
-        
-        go func() {
-            ch <- "Hello, world!"
-        }()
-
-        fmt.Println(<-ch)
-    }
+.play concurrency_patterns_basic.go /^//START/,/^//END/
 
 : Don't communicate by sharing memory, share memory by communicating.
 
@@ -772,7 +763,7 @@ Hash:
 
 .background images/hash.png
 
-.play crypto/hash.go /^//START/,/^//END/
+: .play crypto/hash.go /^//START/,/^//END/
 
 
 * Encrypt, Decrypt and Sign data using Go
@@ -784,7 +775,7 @@ Chave Simetrica:
  AES
  DES
  Twofish
-.play crypto/asimetric.go /^//START/,/^//END/
+: .play crypto/asimetric.go /^//START/,/^//END/
 
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]

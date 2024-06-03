@@ -18,7 +18,7 @@ func main() {
 
 func generator(ch chan int) {
 	for i := 0; i < 5; i++ {
-		time.Sleep(1 * time.Second)
+		time.Sleep(500 * time.Millisecond)
 		ch <- i
 	}
 	close(ch)
