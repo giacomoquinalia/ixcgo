@@ -778,7 +778,8 @@ Hash:
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
 Chave Simetrica:
- - Mesma chave encripta e decripta
+
+- Mesma chave encripta e decripta
 
  AES
  DES
@@ -788,10 +789,11 @@ Chave Simetrica:
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
 Chave Assimetrica:
- - Par de chaves, numeros primos(RSA) ou curva eliptica(ECC)
- - Uma chave privada e uma chave Publica
- - Assinar um dado
- - Encriptar um dado
+
+- Par de chaves, numeros primos(RSA) ou curva eliptica(ECC)
+- Uma chave privada e uma chave Publica
+- Assinar um dado
+- Encriptar um dado
 .play crypto/asimetric.go /^//START/,/^//END/
 
 
