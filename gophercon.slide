@@ -102,7 +102,7 @@ Evolução das linguagens no Mercado Livre no período de 2019 a 2023
 * Comparando Threads: Threads convencionais vs a inovação de Go
 
  - Syscall
- - Troca de contexto, atualizar registradores com dados da memoria
+ - Troca de contexto, atualiza registradore com dados da memoria
  - Custa aproximadamente 4MB de ram
 .background images/multithread.png  
 
@@ -310,7 +310,6 @@ Suluções com Go:
 
 * GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
 .caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA][Rafael Mateus]]
-
 
     Experiência com IoT na Industria, dosagem quimica, leitura de sensores, Modbus, EtherCAT
 
