@@ -10,6 +10,7 @@ bruno.spolavori@ixcsoft.com.br
 * Acesse: bit.ly/goixc
 .image images/bit.ly_goixc.png 500 500
 
+: START 1
 * GopherCon Brasil
 
 - Florianópolis, 09 e 10 de Maio
@@ -69,6 +70,7 @@ Plataforma na versão atual: *1.22*
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 Evolução das linguagens no Mercado Livre no período de 2019 a 2023
+: 30000 microservices e mais de 100 milhoes de requisicoes por minuto
 .image images/mercado_livre_languages_predict.png 500 840
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
@@ -92,19 +94,22 @@ Evolução das linguagens no Mercado Livre no período de 2019 a 2023
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/language_comparison_2.png
+: Development costs: fácil de manter, o desenvolvimento é rápido
+: Operating costs: infraestrutura, go gera um binário apenas, eficiência no uso de recursos.
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/language_comparison_3.png
 
 : * Perguntas?
 : .image images/any_questions_2.png
-
+: END 1
+: START 2
 * Comparando Threads: Threads convencionais vs a inovação de Go
 .caption por [[https://youtu.be/ve4PRlUw7Io?si=zs2SZa1gUZkrvSHC][Ana Gabriela Franco]]
 
  - Syscall
  - Scheduler
- - Troca de contexto, atualiza registradore com dados da memoria
+ - Troca de contexto, atualiza registradores com dados da memoria
  - Custa aproximadamente 4MB de ram
 .background images/multithread.png  
 
@@ -119,16 +124,17 @@ Inovação de Go: *Goroutines*
 - GopherCon 2018: Kavya Joshi - The Scheduler Saga
 
 .html html/15.html
-
+: END 2
+: START 3
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
 
 Hash:
 
-- Deterministico
+- Determinístico
 - Efeito avalanche
 - Perda de dados
-- Rapido
+- Rápido
 
 .background images/hash.png
 
@@ -137,9 +143,9 @@ Hash:
 
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
-Chave Simetrica:
+Chave Simétrica:
 
-- Mesma chave encripta e decripta
+- Mesma chave encripta e desencripta
 
  AES
  DES
@@ -148,14 +154,15 @@ Chave Simetrica:
 
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
-Chave Assimetrica:
+Chave Assimétrica:
 
-- Par de chaves, numeros primos(RSA) ou curva eliptica(ECC)
+- Par de chaves, números primos (RSA) ou curva elíptica (ECC)
 - Uma chave privada e uma chave Publica
 - Assinar um dado
 - Encriptar um dado
 .play crypto/asimetric.go /^//START/,/^//END/
-
+: END 3
+: START 4
 * Padrões de Concorrência em Go
 .caption por [[https://www.youtube.com/watch?v=ajsxiMPazT8][Cássio Botaro]]
 
@@ -178,7 +185,7 @@ Mundo real: paralelismo COM concorrência
 Como Go trabalha com concorrência?
 
 - Goroutines: funções de execução independente
-- Channels: Um channel em Go fornece uma conexão entre goroutines, permitindo que se comuniquem
+- Channels: um channel em Go fornece uma conexão entre goroutines, permitindo que se comuniquem
 
 .play concurrency_patterns_basic.go /^//START/,/^//END/
 
@@ -195,7 +202,6 @@ Como Go trabalha com concorrência?
 .play concurrency_patterns_worker_group_pattern.go /^//START/,/^//END/
 
 * Padrões de Concorrência em Go
-*Worker* *group*: funções que esperam entradas para realizar um trabalho
 
     func worker(id int, in <-chan int64, out chan<- int64, wg *sync.WaitGroup) {
         for v := range in {
@@ -207,81 +213,64 @@ Como Go trabalha com concorrência?
     }
 
 * Padrões de Concorrência em Go
-*Pipelines*: uma função escreve um valor em uma saída, e essa saída é a entrada de outra função
+*Pipelines*: uma função escreve um valor em uma saída que é a entrada de outra função
 .play concurrency_patterns_pipeline_pattern.go /^//START/,/^//END/
 
 * Padrões de Concorrência em Go
 *Fan-In*: processar múltiplas entradas e combinar em uma saída
 .play concurrency_patterns_fanin_pattern.go /^//START/,/^//END/
 
-* Padrões de Concorrência em Go
-*Fan-In*: processar múltiplas entradas e combinar em uma saída
+: * Padrões de Concorrência em Go
+: *Fan-In*: processar múltiplas entradas e combinar em uma saída
 
-    func fanIn(input1, input2 <-chan string) <-chan string {
-        output := make(chan string)
-        go func() {
-            for {
-                select {
-                case v := <-input1:
-                    output <- v
-                case v := <-input2:
-                    output <- v
-                }
-            }
-        }() 
-        return output
-    }
+:    func generator(msg string) <-chan string {
+:        input := make(chan string)
+:        go func() {
+:            for i := 0; ; i++ {
+:                input <- fmt.Sprintf("%s %d", msg, i)
+:                time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+:            }
+:        }()
+:        return input
+:    }
 
 * Padrões de Concorrência em Go
-*Fan-Out*: 
+*Fan-Out*:
 .play concurrency_patterns_fanout_pattern.go /^//START/,/^//END/
 
-* Padrões de Concorrência em Go
-
-    func fanOut(input <-chan int, outputs ...chan<- int) {
-        var wg sync.WaitGroup
-        for v := range input {
-            wg.Add(len(outputs))
-            for _, saida := range outputs {
-                go publish(saida, v, &wg)
-            }
-            wg.Wait()
-        }
-        for _, output := range outputs {
-            close(output)
-        }
-    }
-    func sequence(start, end int) <-chan int {
-        input := make(chan int)
-        go func() {
-            for i := start; i <= end; i++ {
-                input <- i
-            }
-            close(input)
-        }()
-        return input
-    }
-    func publish(output chan<- int, value int, wg *sync.WaitGroup) {
-        select {
-        case output <- value:
-        case <-time.After(1 * time.Second):
-        }
-        wg.Done()
-    }
+: * Padrões de Concorrência em Go
+:
+:    func worker(id int, in <-chan int, wg *sync.WaitGroup) {
+:        for v := range in {
+:            fmt.Printf("Worker %d está processando o valor %d\n", id, v)
+:        }
+:        wg.Done()
+:    }
+:    func sequence(start, end int) <-chan int {
+:        input := make(chan int)
+:        go func() {
+:            for i := start; i <= end; i++ {
+:                input <- i
+:            }
+:            close(input)
+:        }()
+:        return input
+:    }
+:    func publish(output chan<- int, value int, wg *sync.WaitGroup) {
+:        select {
+:        case output <- value:
+:        case <-time.After(1 * time.Second):
+:        }
+:        wg.Done()
+:    }
 
 * Padrões de Concorrência em Go
 *Sistema* *de* *Ticket*: usado para controlar quando um determinado trabalho pode ser executado
+: exemplo de rating limit
+: existem api gatweays em go que usam esse algoritimo
 .play concurrency_patterns_ticket_pattern.go /^//START/,/^//END/
 
 * Padrões de Concorrência em Go
-*Sistema* *de* *Ticket*: 
-
-    func worker(tickets <-chan Ticket, work <-chan Work) {
-        for w := range work {
-            <-tickets // espera por um ticket
-            w()       // executa um trabalho
-        }
-    }
 
     func boxOffice(tickets chan<- Ticket, timeout time.Duration, nTickets int) {
         for {
@@ -295,19 +284,28 @@ Como Go trabalha com concorrência?
     }
 
 
+    func worker(tickets <-chan Ticket, work <-chan Work) {
+        for w := range work {
+            <-tickets // espera por um ticket
+            w()       // executa um trabalho
+        }
+    }
+
 : * Janela Deslizante
 : .play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
 
 : * Processamento em Lote
 : .play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
 
+: END 4
+: START 5
 
 * Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
 .caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
     Aproximadamente 2200 clientes com 6000 câmeras apontadas para a rua
     2000 câmeras internas. Totalizando 190.000 usuários finais.
 
-- Desafios semelhantes aos nossos, porem com hardware proprietario
+- Desafios semelhantes aos nossos, porem com hardware proprietário
 - OpenWRT
 - Estudaram o uso de C, C++, Rust, Python (Interpletado e Compilado) e Lua
 .image images/Embarcados_linguagens.jpg
@@ -328,55 +326,67 @@ Como Go trabalha com concorrência?
 .caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
 
 Problemas:
- - Restrições de Hardware
- - Problemas com os Chineses (API, Documentação)
- - Converter RTSP para WebRTC
- - Monitoramento & Tunelamento 
 
+- Restrições de Hardware
+- Problemas com os Chineses (API, Documentação)
+- Converter RTSP para WebRTC
+- Monitoramento & Tunelamento 
 
-Suluções com Go:
- - Go Routines
- - Channels
- - Implementa protocolos de comunicação baixo nivel
- - Facil de compilar
- - Tem cara de C
+.background images/gopher_sad.png
 
+* Uma Experiência de Desenvolvimento de Software Embarcado com GoLang
+.caption por [[https://youtu.be/FSK-i0goCGs?si=A14UxTUjgk0Sl1re][Matheus Deodato]]
+
+Soluções com Go:
+
+- Go Routines
+- Channels
+- Implementa protocolos de comunicação baixo nível
+- Fácil de compilar
+- Tem cara de C
+
+.html html/gopher_happy.html
 
 * GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
 .caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA][Rafael Mateus]]
 
-    Experiência com IoT na Industria, dosagem quimica, leitura de sensores, Modbus, EtherCAT
+    Experiência com IoT na Indústria, dosagem química, leitura de sensores, Modbus, EtherCAT
 
 Vantagens:
- - Concorrencia nativa (Go routines e Channels)
- - Baixo consumo de Recursos
- - Facil de compilar o mesmo codigo em diversos processadores
- - Periph.io
 
+- Concorrência nativa (Go routines e Channels)
+- Baixo consumo de Recursos
+- Fácil de compilar o mesmo código em diversos processadores
+- Periph.io
+.html html/gopher_periph.html
 
 
 * GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
 .caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA&][Rafael Mateus]]
 
 .image images/tinygo.png
- - Plataforma Go para desenvolvimento em embarcados
- - Compila para microprocessadores, PIC, AVR (Arduino), GBA
- - Implementa nativamente Protocolos de comunicação de baixo nivel, I2C, SPI, UART
- - Tem ferramentas para realizar o flash nos dispositivos suportados
+
+- Plataforma Go para desenvolvimento em embarcados
+- Compila para microprocessadores, PIC, AVR (Arduino), GBA
+- Implementa nativamente Protocolos de comunicação de baixo nível, I2C, SPI, UART
+- Tem ferramentas para realizar o flash nos dispositivos suportados
 
 * GoIoT: Inovando na Conectividade com Go e Dispositivos Inteligentes
 .caption por [[https://www.youtube.com/watch?v=ICqv5jJYLEA&][Rafael Mateus]]
  
 Hello World
- - Golang > 1.9Mb 
- - TinyGo > 251Mb
+
+- Golang > 1.9Mb 
+- TinyGo > 251Mb
 
 Hello World sem debugger
- - Golang > 837Kb 
- - TinyGo > 10Kb
 
-E é possivel reduzir mais!
+- Golang > 837Kb 
+- TinyGo > 10Kb
 
+.html html/gopher_super.html
+: END 5
+: START 6
 * Profile-Guided Optimization (PGO)
 .caption por [[https://www.youtube.com/watch?v=V2LSnbvylz4][Alex Rios]]
 
@@ -385,6 +395,7 @@ Técnica de otimização do compilador
 - CPU profiling & Memory profiling
 - Visualização pelo browser e terminal
 - Destinado para ambiente de produção
+: workload é a quantidade de trabalho em um período de tempo
 - *2-14%* em melhora de performance
 
 Como aplicar o PGO?
@@ -421,7 +432,7 @@ Quando você deseja iniciar e parar a criação de profiling programaticamente e
 * Profile-Guided Optimization (PGO)
 
 *net/http/pprof*
-Quando desejar ativar o profiling sob demanda do seu aplicativo em execução por meio de um servidor HTTP. 
+Quando desejar ativar o profiling sob demanda da sua aplicação em execução por meio de um servidor HTTP. 
 
     package main
     
@@ -462,18 +473,18 @@ Inlining hot functions
     }
 :
     func main() {
-        c := 1 + 2
+        c := 1 + 2 // constant propagation
     }
 :
     func main() {
-        c := 3
+        c := 3 // constant folding
     }
 
 * Profile-Guided Optimization (PGO)
 *Escape* *analysis*: a referência para um objeto "escapa" da função?
 
-*Heap*: pode armazenar qualquer coisa. Garbage collector cuida da memória
-*Stack*: cresce a cada chamada, encolhe a retorno. Só podem armazenar valores que "morrem" antes de retornar
+*Heap*: pode armazenar qualquer coisa. Garbage collector cuida da memória.
+*Stack*: cresce a cada chamada, encolhe a retorno.
 
     type Foo struct { a, b int }
 
@@ -498,20 +509,20 @@ Devirtualization
     }
 :
     func main() {
-        f, _ := os.Open("foo.txt")
-        var r io.Reader = f
-        r.Read(b)
+        file, _ := os.Open("foo.txt")
+        var reader io.Reader = file
+        reader.Read(b)
     }
 :
     ...
     
-    if f, ok := r.(*os.File); ok {
-        f.Read(b)
+    if file, ok := reader.(*os.File); ok {
+        file.Read(b)
     } else {
-        r.Read(b)
+        reader.Read(b)
     }
 
-: O que *não* invalida o profb ile?
+: O que *não* invalida o profile?
 : - Alterações em um arquivo fora de uma hot function
 : - Mover uma função para outro arquivo do *mesmo* *package*
 : O que *invalida* o profile?
@@ -541,7 +552,7 @@ Pesquisa: Um filme do Arnold Shuazineguer
 
 Index invertido
 
-.image images/inverted_index.png 450 900
+.image images/inverted_index.png 450 850
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
@@ -569,15 +580,17 @@ Resultado:
 BleveSearch - A modern text/numeric/geo-spatial/vector indexing library for Go
 : .image images/blevesearch.png
 
-Mapeamento de campos dinâmicos
+Mapeamento de campos de tipo dinâmicos
 
     mapping := bleve.NewIndexMapping()
+
     index, err := bleve.New("index.bleve", mapping)
     index, err := bleve.NewMemOnly(mapping)
 
 Mapeamento
 
     document := bleve.NewDocumentMapping()
+
     field := bleve.NewTextFieldMapping()
     field.Analyser = "en"
     document.AddFieldMappingsAt("title", field)
@@ -606,7 +619,7 @@ Tipos de busca
     bleve.NewPrefixQuery("arnold")
     bleve.NewQueryStringQuery("arnold")
     bleve.NewFuzzyQuery("arnoud")
-    bleve.NewGeoDistanceQuery(lt,ln,"1km")
+    bleve.NewGeoDistanceQuery(lt, ln, "1km")
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
@@ -619,12 +632,14 @@ Busca
         // manipular os resultados (map[string]interface)
     }
 
+.html html/gopher_abduction.html
+
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
 E se eu tiver MILHÕES/BILHÕES de registros?
 
-- Escrita X Leitura
+- Problemas de escrita X leitura
 - Limitação física
 
 .image images/search_engines.png 350 700
@@ -636,28 +651,28 @@ E se eu tiver MILHÕES/BILHÕES de registros?
 
 : .image images/sharding.png
 
-
 * Resolvendo Desafios de Live Streaming em Go
 .caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
 
 Streaming On Demand
 
-- Encodificação do Video
+- Empacotamento do Video
 - Taxa de bits adaptativa
-- Multiplos canais de audio
-- Inserção dinamica de anúncios
+- Múltiplos canais de áudio
+- Inserção dinâmica de anúncios
 - Armazenamento distribuído de arquivos pré-processados
 .image images/Streaming.jpg 210 1000
+
 * Resolvendo Desafios de Live Streaming em Go
 .caption por [[https://youtu.be/7gVrMCY40yQ?si=-jAYvXTP_KD8YLCz][Laís Lima e Isabella Mariz]]
 
 Live Streaming
 
-- Encodificação em tempo real
+- Empacotamento em tempo real
 - Legendas em tempo real
-- Regras de negocio em tempo real
-- Diversas programações com regras de negocio diferentes
-- Latencia, bit rate 
+- Regras de negócio em tempo real
+- Diversas programações com regras de negócio diferentes
+- Latência, bit rate
 - Geolocalização
 
  Gopher play
@@ -728,7 +743,7 @@ With
 .caption por [[https://youtu.be/dFfnVehb5TQ?si=XmZxzBvqwWaZ2t_3][Amim Knabben e Juliana Gaioso]]
 
 - Weakness, Platform & Vulnerability (CWE, CVE, CPE)
-- Metodos de pontuação, CVSS & EPSS
+- Métodos de pontuação, CVSS & EPSS
 - Software Bill Of Materials (SBOM)
 - SLSA & GitOps
 .image images/gopher_hacker.png 300 400
@@ -757,16 +772,18 @@ Alguns fatores podem influenciar na decisão de adotar ou não uma ferramenta de
 - Prazo de entrega
 - Volume de dados a serem processados
 
+.html html/orm2.html
+
 * Escolhendo (ou não) o melhor ORM para o seu projeto
 
-Vantagens
+*Vantagens*
 
 - Produtividade
 - Developer-friendly
 - Mecanismos que ajudam a mitigar problemas de segurança
 - Suporte a diferentes bases de dados
 
-Desvantagens
+*Desvantagens*
 
 - Condicionam o uso de SELECT * FROM
 - Menos controle
@@ -774,6 +791,8 @@ Desvantagens
 - SQL não é uma sub-linguagem
 - Falta de flexibilidade para atender queries complexas
 - A ferramenta de ORM também pode ser burlada
+
+.html html/orm.html
 
 * Escolhendo (ou não) o melhor ORM para o seu projeto
 
@@ -795,3 +814,15 @@ Code-first ORMs
 Geradores de código Go a partir de queries SQL
 
 - sqlc
+
+* Outras palestras
+https://gopherconbr.org
+
+- Go CLIs além do óbvio - Matheus Mina
+- Serviços que Fofocam: Desvendando a Magia do Serf em Go - Geovani de Souza
+- Painel Go e Mercado - FullCycle, Mercado Livre, Nearsure, Transfeera
+- Como estruturar um projeto Go - Tiago Temporin
+- Criando um gerador de código para qualquer projeto com GO + Embed - Vinícius Boscardin
+- Go no browser: WebAssembly em ação - Alexandre Cabral
+- Lighting Talks
+- Hexagonal, Clean Architecture ou Domain-Driven Design? - Rodrigo Branas

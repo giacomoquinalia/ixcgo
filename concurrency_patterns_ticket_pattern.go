@@ -31,14 +31,14 @@ func main() {
 	tickets := make(chan Ticket)
 	works := make(chan Work)
 
-	go boxOffice(tickets, 1*time.Second, 10)
+	go boxOffice(tickets, 1*time.Second, 2)
 	go worker(tickets, works)
 
-	for i := 0; i <= 30; i++ {
+	for i := 0; i <= 6; i++ {
+		fmt.Printf("Enviando trabalho %d\n", i)
 		works <- func() {
-			fmt.Println("processando ticket")
+			fmt.Printf("Processando trabalho %d\n", i)
 		}
-		fmt.Println("Work ", i, " sent")
 	}
 
 	close(works)

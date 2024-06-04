@@ -8,9 +8,9 @@ import (
 
 // START OMIT
 func main() {
-	ch := fanIn(generator("Foo"), generator("Bar"))
-	for i := 0; i < 10; i++ {
-		fmt.Println(<-ch)
+	output := fanIn(generator("Foo"), generator("Bar"))
+	for {
+		fmt.Println(<-output)
 	}
 }
 
