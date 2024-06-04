@@ -7,8 +7,8 @@ giacomo.quinalia@ixcsoft.com.br
 Bruno Spolavori
 bruno.spolavori@ixcsoft.com.br
 
-* Acesse: bit.ly/goixc
-.image images/bit.ly_goixc.png 500 500
+: * Acesse: bit.ly/goixc
+: .image images/bit.ly_goixc.png 500 500
 
 : START 1
 * GopherCon Brasil
@@ -146,10 +146,10 @@ Hash:
 Chave Simétrica:
 
 - Mesma chave encripta e desencripta
+- AES
+- DES
+- Twofish
 
- AES
- DES
- Twofish
 .play crypto/asimetric.go /^//START/,/^//END/
 
 * Encrypt, Decrypt and Sign data using Go
@@ -814,6 +814,8 @@ Code-first ORMs
 Geradores de código Go a partir de queries SQL
 
 - sqlc
+
+.html html/ladder.html
 
 * Outras palestras
 https://gopherconbr.org
