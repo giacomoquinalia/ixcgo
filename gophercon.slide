@@ -236,7 +236,7 @@ Como Go trabalha com concorrência?
 :    }
 
 * Padrões de Concorrência em Go
-*Fan-Out*:
+*Fan-Out*: processar uma entrada para múltiplas entradas
 .play concurrency_patterns_fanout_pattern.go /^//START/,/^//END/
 
 : * Padrões de Concorrência em Go
