@@ -69,6 +69,7 @@ Plataforma na versão atual: *1.22*
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 Evolução das linguagens no Mercado Livre no período de 2019 a 2023
+: 30000 microservices e mais de 100 milhoes de requisicoes por minuto
 .image images/mercado_livre_languages_predict.png 500 840
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
@@ -92,6 +93,8 @@ Evolução das linguagens no Mercado Livre no período de 2019 a 2023
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/language_comparison_2.png
+: Development costs: facil de manter, o desenvolvimento é rápido
+: Operating costs: infraestrutura, go gera um binario apenas, eficiencia no uso de recursos.
 
 * Go no Mundo Real: Empresas, Carreiras e Futuro da Linguagem
 .image images/language_comparison_3.png
@@ -100,6 +103,7 @@ Evolução das linguagens no Mercado Livre no período de 2019 a 2023
 : .image images/any_questions_2.png
 
 * Comparando Threads: Threads convencionais vs a inovação de Go
+.caption por [[https://youtu.be/ve4PRlUw7Io?si=zs2SZa1gUZkrvSHC][Ana Gabriela Franco]]
 
  - Syscall
  - Troca de contexto, atualiza registradore com dados da memoria
@@ -139,7 +143,7 @@ Mundo real: paralelismo COM concorrência
 Como Go trabalha com concorrência?
 
 - Goroutines: funções de execução independente
-- Channels: Um channel em Go fornece uma conexão entre goroutines, permitindo que se comuniquem
+- Channels: um channel em Go fornece uma conexão entre goroutines, permitindo que se comuniquem
 
 .play concurrency_patterns_basic.go /^//START/,/^//END/
 
@@ -156,7 +160,6 @@ Como Go trabalha com concorrência?
 .play concurrency_patterns_worker_group_pattern.go /^//START/,/^//END/
 
 * Padrões de Concorrência em Go
-*Worker* *group*: funções que esperam entradas para realizar um trabalho
 
     func worker(id int, in <-chan int64, out chan<- int64, wg *sync.WaitGroup) {
         for v := range in {
@@ -168,77 +171,64 @@ Como Go trabalha com concorrência?
     }
 
 * Padrões de Concorrência em Go
-*Pipelines*: uma função escreve um valor em uma saída, e essa saída é a entrada de outra função
+*Pipelines*: uma função escreve um valor em uma saída que é a entrada de outra função
 .play concurrency_patterns_pipeline_pattern.go /^//START/,/^//END/
 
 * Padrões de Concorrência em Go
 *Fan-In*: processar múltiplas entradas e combinar em uma saída
 .play concurrency_patterns_fanin_pattern.go /^//START/,/^//END/
 
-* Padrões de Concorrência em Go
-*Fan-In*: processar múltiplas entradas e combinar em uma saída
+: * Padrões de Concorrência em Go
+: *Fan-In*: processar múltiplas entradas e combinar em uma saída
 
-    func generator(msg string) <-chan string {
-        input := make(chan string)
-        go func() {
-            for i := 0; ; i++ {
-                input <- fmt.Sprintf("%s %d", msg, i)
-                time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
-            }
-        }()
-        return input
-    }
+:    func generator(msg string) <-chan string {
+:        input := make(chan string)
+:        go func() {
+:            for i := 0; ; i++ {
+:                input <- fmt.Sprintf("%s %d", msg, i)
+:                time.Sleep(time.Duration(rand.Intn(1e3)) * time.Millisecond)
+:            }
+:        }()
+:        return input
+:    }
 
 * Padrões de Concorrência em Go
-*Fan-Out*: 
+*Fan-Out*:
 .play concurrency_patterns_fanout_pattern.go /^//START/,/^//END/
 
-* Padrões de Concorrência em Go
-
-    func fanOut(input <-chan int, outputs ...chan<- int) {
-        var wg sync.WaitGroup
-        for v := range input {
-            wg.Add(len(outputs))
-            for _, saida := range outputs {
-                go publish(saida, v, &wg)
-            }
-            wg.Wait()
-        }
-        for _, output := range outputs {
-            close(output)
-        }
-    }
-    func sequence(start, end int) <-chan int {
-        input := make(chan int)
-        go func() {
-            for i := start; i <= end; i++ {
-                input <- i
-            }
-            close(input)
-        }()
-        return input
-    }
-    func publish(output chan<- int, value int, wg *sync.WaitGroup) {
-        select {
-        case output <- value:
-        case <-time.After(1 * time.Second):
-        }
-        wg.Done()
-    }
+: * Padrões de Concorrência em Go
+:
+:    func worker(id int, in <-chan int, wg *sync.WaitGroup) {
+:        for v := range in {
+:            fmt.Printf("Worker %d está processando o valor %d\n", id, v)
+:        }
+:        wg.Done()
+:    }
+:    func sequence(start, end int) <-chan int {
+:        input := make(chan int)
+:        go func() {
+:            for i := start; i <= end; i++ {
+:                input <- i
+:            }
+:            close(input)
+:        }()
+:        return input
+:    }
+:    func publish(output chan<- int, value int, wg *sync.WaitGroup) {
+:        select {
+:        case output <- value:
+:        case <-time.After(1 * time.Second):
+:        }
+:        wg.Done()
+:    }
 
 * Padrões de Concorrência em Go
 *Sistema* *de* *Ticket*: usado para controlar quando um determinado trabalho pode ser executado
+: exemplo de rating limit
+: existem api gatweays em go que usam esse algoritimo
 .play concurrency_patterns_ticket_pattern.go /^//START/,/^//END/
 
 * Padrões de Concorrência em Go
-*Sistema* *de* *Ticket*: 
-
-    func worker(tickets <-chan Ticket, work <-chan Work) {
-        for w := range work {
-            <-tickets // espera por um ticket
-            w()       // executa um trabalho
-        }
-    }
 
     func boxOffice(tickets chan<- Ticket, timeout time.Duration, nTickets int) {
         for {
@@ -251,6 +241,13 @@ Como Go trabalha com concorrência?
         }
     }
 
+
+    func worker(tickets <-chan Ticket, work <-chan Work) {
+        for w := range work {
+            <-tickets // espera por um ticket
+            w()       // executa um trabalho
+        }
+    }
 
 : * Janela Deslizante
 : .play concurrency_patterns_generator_pattern.go /^//START/,/^//END/
@@ -389,6 +386,7 @@ Técnica de otimização do compilador
 - CPU profiling & Memory profiling
 - Visualização pelo browser e terminal
 - Destinado para ambiente de produção
+: workload é a quantidade de trabalho em um período de tempo
 - *2-14%* em melhora de performance
 
 Como aplicar o PGO?
@@ -425,7 +423,7 @@ Quando você deseja iniciar e parar a criação de profiling programaticamente e
 * Profile-Guided Optimization (PGO)
 
 *net/http/pprof*
-Quando desejar ativar o profiling sob demanda do seu aplicativo em execução por meio de um servidor HTTP. 
+Quando desejar ativar o profiling sob demanda da sua aplicação em execução por meio de um servidor HTTP. 
 
     package main
     
@@ -466,18 +464,18 @@ Inlining hot functions
     }
 :
     func main() {
-        c := 1 + 2
+        c := 1 + 2 // constant propagation
     }
 :
     func main() {
-        c := 3
+        c := 3 // constant folding
     }
 
 * Profile-Guided Optimization (PGO)
 *Escape* *analysis*: a referência para um objeto "escapa" da função?
 
-*Heap*: pode armazenar qualquer coisa. Garbage collector cuida da memória
-*Stack*: cresce a cada chamada, encolhe a retorno. Só podem armazenar valores que "morrem" antes de retornar
+*Heap*: pode armazenar qualquer coisa. Garbage collector cuida da memória.
+*Stack*: cresce a cada chamada, encolhe a retorno.
 
     type Foo struct { a, b int }
 
@@ -502,17 +500,17 @@ Devirtualization
     }
 :
     func main() {
-        f, _ := os.Open("foo.txt")
-        var r io.Reader = f
-        r.Read(b)
+        file, _ := os.Open("foo.txt")
+        var reader io.Reader = file
+        reader.Read(b)
     }
 :
     ...
     
-    if f, ok := r.(*os.File); ok {
-        f.Read(b)
+    if file, ok := reader.(*os.File); ok {
+        file.Read(b)
     } else {
-        r.Read(b)
+        reader.Read(b)
     }
 
 : O que *não* invalida o profb ile?
@@ -545,7 +543,7 @@ Pesquisa: Um filme do Arnold Shuazineguer
 
 Index invertido
 
-.image images/inverted_index.png 450 900
+.image images/inverted_index.png 450 850
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
@@ -573,15 +571,17 @@ Resultado:
 BleveSearch - A modern text/numeric/geo-spatial/vector indexing library for Go
 : .image images/blevesearch.png
 
-Mapeamento de campos dinâmicos
+Mapeamento de campos de tipo dinâmicos
 
     mapping := bleve.NewIndexMapping()
+
     index, err := bleve.New("index.bleve", mapping)
     index, err := bleve.NewMemOnly(mapping)
 
 Mapeamento
 
     document := bleve.NewDocumentMapping()
+
     field := bleve.NewTextFieldMapping()
     field.Analyser = "en"
     document.AddFieldMappingsAt("title", field)
@@ -610,7 +610,7 @@ Tipos de busca
     bleve.NewPrefixQuery("arnold")
     bleve.NewQueryStringQuery("arnold")
     bleve.NewFuzzyQuery("arnoud")
-    bleve.NewGeoDistanceQuery(lt,ln,"1km")
+    bleve.NewGeoDistanceQuery(lt, ln, "1km")
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
@@ -623,12 +623,14 @@ Busca
         // manipular os resultados (map[string]interface)
     }
 
+.html html/gopher_abduction.html
+
 
 * Construindo Sistemas de Busca Eficientes em Go: Da Simplicidade à Escala Global
 
 E se eu tiver MILHÕES/BILHÕES de registros?
 
-- Escrita X Leitura
+- Problemas de escrita X leitura
 - Limitação física
 
 .image images/search_engines.png 350 700
@@ -713,16 +715,18 @@ Alguns fatores podem influenciar na decisão de adotar ou não uma ferramenta de
 - Prazo de entrega
 - Volume de dados a serem processados
 
+.html html/orm2.html
+
 * Escolhendo (ou não) o melhor ORM para o seu projeto
 
-Vantagens
+*Vantagens*
 
 - Produtividade
 - Developer-friendly
 - Mecanismos que ajudam a mitigar problemas de segurança
 - Suporte a diferentes bases de dados
 
-Desvantagens
+*Desvantagens*
 
 - Condicionam o uso de SELECT * FROM
 - Menos controle
@@ -730,6 +734,8 @@ Desvantagens
 - SQL não é uma sub-linguagem
 - Falta de flexibilidade para atender queries complexas
 - A ferramenta de ORM também pode ser burlada
+
+.html html/orm.html
 
 * Escolhendo (ou não) o melhor ORM para o seu projeto
 
@@ -751,6 +757,8 @@ Code-first ORMs
 Geradores de código Go a partir de queries SQL
 
 - sqlc
+
+.html html/ladder.html
 
 * Encrypt, Decrypt and Sign data using Go
 .caption por [[https://youtu.be/wf9jVKLRsKo?si=nxoy1RCZzeFjZtlP][Rafael Escrich]]
